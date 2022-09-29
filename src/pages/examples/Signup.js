@@ -5,18 +5,16 @@ import { faAngleLeft, faEnvelope, faUnlockAlt, faPhone, faRoad } from "@fortawes
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup, ListGroup, Image } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Routes } from "../../routes";
 import logo from "../../assets/img/logo-ftwkf.png";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import axios from "./api/axios";
+import HomePage from "../HomePage";
 const USER_REGEX = /^[0-9]{3,10}$/;
 const PWD_REGEX = /^[0-9]{3,10}$/;
 const REGISTER_URL='register/';
 const Register = () => {
-  const [rol, setRol] = useState("");
-  useEffect(() => {
-    // storing input name
-    localStorage.setItem("rol", JSON.stringify(rol));
-  }, [rol]);
+
 const userRef = useRef();
 const errRef = useRef();
 const [username, setUsername] = useState('');
@@ -32,6 +30,16 @@ const [macthFaocus , setMatchFocus] = useState('');
 const[errMsg, setErrMsg] = useState ('') ;
 const[success, setSuccess] = useState ('') ;
 
+
+const [rol, setRol] = useState('');
+
+useEffect(() => {
+  setRol(JSON.parse(window.sessionStorage.getItem("rol")));
+}, []);
+
+useEffect(() => {
+  window.sessionStorage.setItem("rol", rol);
+}, [rol]);
 useEffect(() => {
   const result = USER_REGEX.test(username);
   console.log(result);
@@ -71,7 +79,12 @@ useEffect(() => {
        }
     );
     console.log({'username':username,'password':password});
+    localStorage.setItem("rol", JSON.stringify('rol',rol)) 
+    setRol();
     setSuccess(true);
+  
+      // storing input rol
+    
     } catch(err){
       if(err?.response){
         setErrMsg('no Server response')
@@ -88,7 +101,8 @@ useEffect(() => {
 
   return (
     <>{success ? (
-      <h1>Gooood</h1> ) : (
+      <HomePage />
+      ) : (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-4 mb-lg-5">
         <Container>
@@ -155,16 +169,17 @@ useEffect(() => {
                       />
                     </InputGroup>
                   </Form.Group>
-                  <Form.Group required id="select" className="mb-4" > <Form.Select   
+                  <Form.Group required id="rol" className="mb-4" >
+                     <Form.Select name="rol" id="rol"   
                   value={rol}
-                  onChange={(e) => setRol(e.target.value)}>
+                  onChange={(e) =>setRol(e.target.value)}>
       <option >Choisir votre role</option>
       <option value="1">Athlete</option>
       <option value="2">Entraineur</option>
       <option value="3">Président de club</option>
       <option value="4">Arbitre</option>
     </Form.Select>
-                 
+                 {rol}
                   </Form.Group>
                   <FormCheck type="checkbox" className="d-flex mb-4">
                     <FormCheck.Input required id="terms" className="me-2" />

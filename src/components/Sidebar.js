@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
@@ -15,6 +15,13 @@ import logo from "../assets/img/logo-ftwkf.png";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
 export default (props = {}) => {
+  const [username, setRol] = useState('');
+
+  useEffect(() => {
+    setRol(JSON.parse(window.sessionStorage.getItem("username")));
+  }, []);
+
+
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
@@ -98,14 +105,10 @@ export default (props = {}) => {
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
-              <Image src={logo} width={100} height={100}  />
+              <Image src={logo} width={100} height={100}  /> <p> {username}</p>
     
               <NavItem title="Acceuil" link={Routes.DashboardOverview.path} icon={faChartPie} />
-              <NavItem external title="Messages" target="_blank" badgeText="Pro" icon={faInbox} />
-              <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
-              <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
-              <NavItem external title="Calendar" target="_blank" badgeText="Pro" icon={faCalendarAlt} />
-              <NavItem external title="Map" target="_blank" badgeText="Pro" icon={faMapPin} />
+              <NavItem title="Profile" icon={faCog} link={Routes.Settings.path} />
 
               <CollapsableNavItem eventKey="tables/" title="Tables" icon={faTable}>
                 <NavItem title="Bootstrap Table" link={Routes.BootstrapTables.path} />

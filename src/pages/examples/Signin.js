@@ -10,6 +10,8 @@ import { Routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import AuthContext from "./context/AuthProvider";
 import { useContext } from "react";
+import HomePage from '../HomePage';
+import DashboardOverview from '../HomePage';
 import axios from "./api/axios";
 const LOGIN_URL='login/';
 const Login = ()=> {
@@ -29,14 +31,15 @@ const handleSubmit = async (e) =>{
   e.preventDefault();
   try{
    const response=axios.post(LOGIN_URL, {mode:'cors'},
-   ({'username':username,'password':password}),
+   JSON.stringify(username, password),
     {
        headers: {'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
        withCredentials: false
     }
  );
  console.log({'username':username,'password':password})
-  console.log('aaaa')
+localStorage.setItem("username", JSON.stringify(username)) 
+ console.log('aaaa')
     setUsername('');
     setPassword('');
     setSuccess(true);
@@ -54,7 +57,8 @@ if(err?.response){
   return (
     <> 
     {success ? (
-      <h1>Gooood</h1> ) : (
+        <DashboardOverview />
+        ) : (
     <main>
       <section className="d-flex align-items-center my-58 mt-lg-4 mb-lg-5">
         <Container>

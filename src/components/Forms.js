@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment-timezone";
 import Datetime from "react-datetime";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +8,11 @@ import { Col, Row, Card, Form, Button, InputGroup } from '@themesberg/react-boot
 
 
 export const GeneralInfoForm = () => {
-  
+  const [rol, setRol] = useState('');
+
+  useEffect(() => {
+    setRol(JSON.parse(window.sessionStorage.getItem("rol")));
+  }, []);
   const [fname, setFname] = useState('');
   const [valideFname , setValidFname] = useState('');
   const [lname, setLname] = useState('');
@@ -21,6 +25,30 @@ export const GeneralInfoForm = () => {
   const [validePhone , setValidPhone] = useState('');
   const [address, setAddress] = useState('');
   const [valideAddress , setValidAddress] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [valideEmail , setValidEmail] = useState('');
+   
+  const [ville, setVille] = useState('');
+  const [valideVille , setValidVille] = useState('');
+  const [club, setClub] = useState('');
+  const [valideClub , setValidClub] = useState('');
+ 
+  const [sport, setSport] = useState('');
+  const [valideSport , setValidSport] = useState('');
+
+  const [ligue, setLigue] = useState('');
+  const [valideLigue , setValidLigue] = useState('');
+
+  
+  const [age, setAge] = useState('');
+  const [valideAge , setValidAge] = useState('');
+
+  const [identite, setIdentite] = useState('');
+  const [valideIdentite , setValididentite] = useState('');
+ 
+  const [medical, setMedical] = useState('');
+  const [valideMedical , setValidmedical] = useState('');
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -29,26 +57,32 @@ export const GeneralInfoForm = () => {
           <Row>
           <Col md={4} className="mb-3">
               <Form.Group id="firstName">
-                <Form.Label>Role</Form.Label>
-                <Form.Control required type="text" placeholder="Enter your first name" />
-              </Form.Group>
+                <Form.Label>Role : {rol}</Form.Label>
+
+              </Form.Group>              
             </Col>
             <Col md={4} className="mb-3">
               <Form.Group id="firstName">
                 <Form.Label>Nom</Form.Label>
-                <Form.Control required type="text" placeholder="Enter your first name" />
+                <Form.Control required type="text" id="fname" name="fname" placeholder="votre Nom" 
+                autoComplete="off" onChange={(e) =>setFname(e.target.value)}
+                value={fname}
+                />
               </Form.Group>
             </Col>
             <Col md={4} className="mb-3">
               <Form.Group id="lastName">
                 <Form.Label>Prenom</Form.Label>
-                <Form.Control required type="text" placeholder="Also your last name" />
+                <Form.Control required type="text" id="lname" name="lname" placeholder="votre prenom"
+                                autoComplete="off" onChange={(e) =>setLname(e.target.value)}
+                                value={lname}
+                />
               </Form.Group>
             </Col>
           </Row>
           <Row className="align-items-center">
             <Col md={6} className="mb-3">
-              <Form.Group id="birthday">
+              <Form.Group id="birthday"  name="birthday" >
                 <Form.Label>Date de naissance</Form.Label>
                 <Datetime
                   timeFormat={false}
@@ -58,11 +92,12 @@ export const GeneralInfoForm = () => {
                       <InputGroup.Text><FontAwesomeIcon icon={faCalendarAlt} /></InputGroup.Text>
                       <Form.Control
                         required
-                        type="text"
+                        type="text" id="birthday"  name="birthday"
                         value={birthday ? moment(birthday).format("MM/DD/YYYY") : ""}
                         placeholder="mm/dd/yyyy"
                         onFocus={openCalendar}
-                        onChange={() => { }} />
+                        autoComplete="off" onChange={(e) =>setBirthday(e.target.value)}
+                        />
                     </InputGroup>
                   )} />
               </Form.Group>
@@ -70,7 +105,10 @@ export const GeneralInfoForm = () => {
             <Col md={6} className="mb-3">
               <Form.Group id="gender">
                 <Form.Label>Gendre</Form.Label>
-                <Form.Select defaultValue="0">
+                <Form.Select defaultValue="0" id="gender"  name="gender"
+                                autoComplete="off" onChange={(e) =>setGender(e.target.value)}
+                                value={gender}
+                >
                   <option value="0">Gender</option>
                   <option value="1">Femme</option>
                   <option value="2">Homme</option>
@@ -82,13 +120,19 @@ export const GeneralInfoForm = () => {
             <Col md={6} className="mb-3">
               <Form.Group id="emal">
                 <Form.Label>Email</Form.Label>
-                <Form.Control required type="email" placeholder="name@company.com" />
+                <Form.Control required type="email" id="email"  
+                                autoComplete="off" onChange={(e) =>setEmail(e.target.value)}
+                                value={email}
+                name="email" placeholder="name@company.com" />
               </Form.Group>
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group id="phone">
                 <Form.Label>Téléphone</Form.Label>
-                <Form.Control required type="number" placeholder="+12-345 678 910" />
+                <Form.Control required type="number" 
+                                                autoComplete="off" onChange={(e) =>setPhone(e.target.value)}
+                                                value={phone}
+                id="phone"  name="phone" placeholder="+12-345 678 910" />
               </Form.Group>
             </Col>
           </Row>
@@ -98,13 +142,16 @@ export const GeneralInfoForm = () => {
             <Col sm={9} className="mb-3">
               <Form.Group id="address">
                 <Form.Label>Address</Form.Label>
-                <Form.Control required type="text" placeholder="Enter your home address" />
+                <Form.Control required type="text" id="address"  name="address" 
+                                                autoComplete="off" onChange={(e) =>setAddress(e.target.value)}
+                                                value={address}
+                placeholder="Enter your home address" />
               </Form.Group>
             </Col>
             <Col sm={3} className="mb-3">
               <Form.Group id="addressNumber">
                 <Form.Label>Numero</Form.Label>
-                <Form.Control required type="number" placeholder="No." />
+                <Form.Control required type="number" placeholder="No."  id=""  name=""/>
               </Form.Group>
             </Col>
           </Row>
@@ -112,13 +159,22 @@ export const GeneralInfoForm = () => {
             <Col sm={4} className="mb-3">
               <Form.Group id="city">
                 <Form.Label>Ville</Form.Label>
-                <Form.Control required type="text" placeholder="City" />
+                <Form.Control required type="text" placeholder="City"  id="ville"  name="ville"
+                
+                autoComplete="off" onChange={(e) =>setVille(e.target.value)}
+                                                value={ville}
+                />
               </Form.Group>
             </Col>
             <Col sm={4} className="mb-3">
               <Form.Group className="mb-2">
                 <Form.Label>Gouvernerat</Form.Label>
-                <Form.Select id="state" defaultValue="0">
+                <Form.Select id="gouvernerat" defaultValue="0"  name="gouvernerat"
+                
+                autoComplete="off" onChange={(e) =>setVille(e.target.value)}
+                                                value={ville}
+                
+                >
                   <option value="0">State</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
@@ -186,19 +242,34 @@ export const GeneralInfoForm = () => {
             <Col sm={4} className="mb-3">
               <Form.Group id="address">
                 <Form.Label>Club</Form.Label>
-                <Form.Control required type="text" placeholder="Enter your home address" />
+                <Form.Select name="club" id="club"    defaultValue="2"
+                  value={club} autoComplete="off"
+                  onChange={(e) =>setClub(e.target.value)}>
+      <option value="0" >Choisir votre club </option>
+      <option value="1">Athlete</option>
+      <option value="2">Entraineur</option>
+      <option value="3">Président de club</option>
+      <option value="4">Arbitre</option>
+    </Form.Select>
+               
               </Form.Group>
             </Col>
             <Col sm={4} className="mb-3">
               <Form.Group id="addressNumber">
                 <Form.Label>Descipline</Form.Label>
-                <Form.Control required type="number" placeholder="No." />
+                <Form.Control required type="number" placeholder="No." id="sport"  name="sport"
+                                  value={sport} autoComplete="off"
+                                  onChange={(e) =>setSport(e.target.value)}
+                />
               </Form.Group>
             </Col>
             <Col sm={4} className="mb-3">
               <Form.Group id="addressNumber">
                 <Form.Label>Ligue</Form.Label>
-                <Form.Control required type="number" placeholder="No." />
+                <Form.Control required type="number" placeholder="No." id="ligue"  name="ligue"
+                                                  value={ligue} autoComplete="off"
+                                                  onChange={(e) =>setLigue(e.target.value)}
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -206,12 +277,16 @@ export const GeneralInfoForm = () => {
             <Col sm={4} className="mb-3">
               <Form.Group id="city">
                 <Form.Label>Age</Form.Label>
-                <Form.Control required type="text" placeholder="City" />
+                <Form.Control required type="text" placeholder="City" id="age"  name="age"
+                
+                value={age} autoComplete="off"
+                onChange={(e) =>setAge(e.target.value)}
+                />
               </Form.Group>
             </Col>
         
             <Col sm={4}>
-              <Form.Group id="zip">
+              <Form.Group id="identite">
                 <Form.Label>Photo d'identite</Form.Label>
                 <div className="file-field">
             <div className="d-flex justify-content-xl ">
@@ -219,7 +294,9 @@ export const GeneralInfoForm = () => {
                 <span className="icon icon-md">
                   <FontAwesomeIcon icon={faPaperclip} className="me-3" />
                 </span>
-                <input type="file" />
+                <input type="file" id="identite"  name="identite"     
+                value={identite} autoComplete="off"
+                onChange={(e) =>setIdentite(e.target.value)}/>
                 <div className="d-md-block text-start">
                   <div className="fw-normal text-dark mb-1">Choisir Image</div>
                   <div className="text-gray small">JPG, GIF, PDF ou PNG</div>
@@ -230,7 +307,7 @@ export const GeneralInfoForm = () => {
               </Form.Group>
             </Col>
             <Col sm={4}>
-              <Form.Group id="zip">
+              <Form.Group id="medical">
                 <Form.Label>Certificat Médicale</Form.Label>
                 <div className="file-field">
             <div className="d-flex justify-content-xl ">
@@ -238,7 +315,8 @@ export const GeneralInfoForm = () => {
                 <span className="icon icon-md">
                   <FontAwesomeIcon icon={faPaperclip} className="me-3" />
                 </span>
-                <input type="file" />
+                <input type="file"  id="medical"  name="medical"                 value={medical} autoComplete="off"
+                onChange={(e) =>setMedical(e.target.value)}/>
                 <div className="d-md-block text-start">
                   <div className="fw-normal text-dark mb-1">Choisir Image</div>
                   <div className="text-gray small">JPG, GIF, PDF ou PNG</div>
