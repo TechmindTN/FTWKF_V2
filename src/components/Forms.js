@@ -1,17 +1,18 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import moment from "moment-timezone";
 import Datetime from "react-datetime";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt,faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Card, Form, Button, InputGroup } from '@themesberg/react-bootstrap';
-
+import axios from "../pages/examples/api/axios";
+const PROFILE_URL ='profile/';
 
 export const GeneralInfoForm = () => {
   const [rol, setRol] = useState('');
 
   useEffect(() => {
-    setRol(JSON.parse(window.sessionStorage.getItem("rol")));
+    setRol(window.localStorage.getItem("rol"));
   }, []);
   const [fname, setFname] = useState('');
   const [valideFname , setValidFname] = useState('');
@@ -29,7 +30,7 @@ export const GeneralInfoForm = () => {
   const [email, setEmail] = useState('');
   const [valideEmail , setValidEmail] = useState('');
    
-  const [ville, setVille] = useState('');
+  const [city, setCity] = useState('');
   const [valideVille , setValidVille] = useState('');
   const [club, setClub] = useState('');
   const [valideClub , setValidClub] = useState('');
@@ -49,11 +50,43 @@ export const GeneralInfoForm = () => {
  
   const [medical, setMedical] = useState('');
   const [valideMedical , setValidmedical] = useState('');
+
+  const [country, setCountry] = useState('');
+  const [valideCountry , setValidcountry] = useState('');
+
+  const[errMsg, setErrMsg] = useState ('') ;
+  const[success, setSuccess] = useState ('') ;
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [id, setId] = useState('');
+
+  useEffect(() => {
+    setId(window.localStorage.getItem("id"));
+  }, []);
+  useEffect(() => {
+    setErrMsg('');
+  },[city,country,phone])
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    const token = '903f1e172269c9d3046929b31c035beb488c860b2fb65b12733ecd793c32152b';
+    axios.post(PROFILE_URL,({'city':city,'country':country,'phone':phone,'role':rol,'id':id}),{mode:'cors'},
+    
+     {
+        headers: {'Authorization': `Basic ${token}`,'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
+        withCredentials: false
+     }
+  );
+   console.log({'city':city,'country':country,'phone':phone,'rol':rol,'id':id})
+    setSuccess(true);
+   
+  }
+
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
-        <h5 className="mb-4">Informations Generales</h5>
-        <Form>
+        <h5 className="mb-4">Informations Generales {id}</h5>
+        <Form onSubmit={handlesubmit}>
           <Row>
           <Col md={4} className="mb-3">
               <Form.Group id="firstName">
@@ -157,22 +190,22 @@ export const GeneralInfoForm = () => {
           </Row>
           <Row>
             <Col sm={4} className="mb-3">
-              <Form.Group id="city">
-                <Form.Label>Ville</Form.Label>
-                <Form.Control required type="text" placeholder="City"  id="ville"  name="ville"
+              <Form.Group id="country">
+                <Form.Label>country</Form.Label>
+                <Form.Control required type="text" placeholder="country"  id="country"  name="country"
                 
-                autoComplete="off" onChange={(e) =>setVille(e.target.value)}
-                                                value={ville}
+                autoComplete="off" onChange={(e) =>setCountry(e.target.value)}
+                                                value={country}
                 />
               </Form.Group>
             </Col>
             <Col sm={4} className="mb-3">
               <Form.Group className="mb-2">
                 <Form.Label>Gouvernerat</Form.Label>
-                <Form.Select id="gouvernerat" defaultValue="0"  name="gouvernerat"
+                <Form.Select id="city" defaultValue="0"  name="cityt"
                 
-                autoComplete="off" onChange={(e) =>setVille(e.target.value)}
-                                                value={ville}
+                autoComplete="off" onChange={(e) =>setCity(e.target.value)}
+                                                value={city}
                 
                 >
                   <option value="0">State</option>
@@ -240,7 +273,7 @@ export const GeneralInfoForm = () => {
           <h5 className="my-4">Infromations Complementaires</h5>
           <Row>
             <Col sm={4} className="mb-3">
-              <Form.Group id="address">
+              <Form.Group id="addrclubess">
                 <Form.Label>Club</Form.Label>
                 <Form.Select name="club" id="club"    defaultValue="2"
                   value={club} autoComplete="off"
@@ -294,10 +327,10 @@ export const GeneralInfoForm = () => {
                 <span className="icon icon-md">
                   <FontAwesomeIcon icon={faPaperclip} className="me-3" />
                 </span>
-                <input type="file" id="identite"  name="identite"     
+                <input type="file" id="identite"  name="identite" required    
                 value={identite} autoComplete="off"
                 onChange={(e) =>setIdentite(e.target.value)}/>
-                <div className="d-md-block text-start">
+                <div className="d-md-block text-start">{identite}
                   <div className="fw-normal text-dark mb-1">Choisir Image</div>
                   <div className="text-gray small">JPG, GIF, PDF ou PNG</div>
                 </div>
@@ -315,9 +348,9 @@ export const GeneralInfoForm = () => {
                 <span className="icon icon-md">
                   <FontAwesomeIcon icon={faPaperclip} className="me-3" />
                 </span>
-                <input type="file"  id="medical"  name="medical"                 value={medical} autoComplete="off"
+                <input type="file"  id="medical"  name="medical"     required   value={medical} autoComplete="off"
                 onChange={(e) =>setMedical(e.target.value)}/>
-                <div className="d-md-block text-start">
+                <div className="d-md-block text-start"> {medical}
                   <div className="fw-normal text-dark mb-1">Choisir Image</div>
                   <div className="text-gray small">JPG, GIF, PDF ou PNG</div>
                 </div>

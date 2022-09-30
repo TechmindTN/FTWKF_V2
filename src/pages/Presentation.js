@@ -81,10 +81,9 @@ export default () => {
     <>
       <Navbar variant="dark" expand="lg" bg="dark" className="navbar-transparent navbar-theme-primary sticky-top">
         <Container className="position-relative justify-content-between px-3">
-          <Navbar.Brand as={HashLink} to="#home" className="me-lg-3 d-flex align-items-center">
-            <Image src={logo} width={55} height={45}/>
-            <span className="ms-2 brand-text d-none d-md-inline">FTWKF</span>
-          </Navbar.Brand>
+          
+            <Image src={logo} width={80} height={70} className="mb-3" alt="Themesberg Logo"/>
+          
 
           <div className="d-flex align-items-center">
             <Navbar.Collapse id="navbar-default-primary">
@@ -105,32 +104,27 @@ export default () => {
           <Row>
             <Col xs={12} className="text-center">
               <div className="react-big-icon d-none d-lg-block"><span className="fab fa-react"></span></div>
-              <h1 className="fw-bolder text-secondary">Volt React Dashboard</h1>
-              <p className="text-muted fw-light mb-5 h5">Open source powered by React.js and Bootstrap 5</p>
-              <div className="d-flex align-items-center justify-content-center">
-                <Button variant="secondary" as={Link} to={Routes.DashboardOverview.path} className="text-dark me-3">
-                  Explore dashboard <FontAwesomeIcon icon={faExternalLinkAlt} className="d-none d-sm-inline ms-1" />
-                </Button>
-                <GitHubButton className="mt-lg-2" href="https://github.com/themesberg/volt-react-dashboard" data-size="large" data-show-count="true" aria-label="Star themesberg/volt-react-dashboard on GitHub">Star</GitHubButton>
-              </div>
+              <h1 className="fw-bolder text-secondary">FTWKF</h1>
+              <p className="text-muted fw-light mb-5 h5">الجامعة التونسية للوشو كونغ فو و الرياضات التابعة و الرياضات التابعة
+</p>
+              
               <div className="d-flex justify-content-center flex-column mb-6 mb-lg-5 mt-5">
                 <div className="text-center">
                   <a href="https://themesberg.com" target="_blank">
-                    <Image src={ThemesbergLogoIcon} height={25} width={25} className="mb-3" alt="Themesberg Logo" />
-                    <p className="text-muted font-small m-0">A Themesberg production</p>
+                    <Image src={logo} height={350} width={350} className="mb-3" alt="Themesberg Logo" />
                   </a>
                 </div>
               </div>
             </Col>
           </Row>
-          <figure className="position-absolute bottom-0 left-0 w-100 d-none d-md-block mb-n2">
+          {/* <figure className="position-absolute bottom-0 left-0 w-100 d-none d-md-block mb-n2">
             <svg className="fill-soft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
               <path d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z" />
             </svg>
-          </figure>
+          </figure> */}
         </Container>
       </section>
-      <div className="section pt-0">
+      {/* <div className="section pt-0">
         <Container className="mt-n10 mt-lg-n12 z-2">
           <Row className="justify-content-center">
             <Col xs={12}>
@@ -168,8 +162,8 @@ export default () => {
             </Col>
           </Row>
         </Container>
-      </div>
-      <section className="section section-md bg-soft pt-lg-3" id="features">
+      </div> */}
+      {/* <section className="section section-md bg-soft pt-lg-3" id="features">
         <Container>
           <Row className="justify-content-between align-items-center mb-5 mb-lg-7">
             <Col lg={5} className="order-lg-2 mb-5 mb-lg-0">
@@ -326,8 +320,8 @@ export default () => {
             </Col>
           </Row>
         </Container>
-      </section>
-      <section className="section section-lg bg-primary" id="getting-started">
+      </section> */}
+      {/* <section className="section section-lg bg-primary" id="getting-started">
         <Container>
           <Row className="justify-content-center text-center text-white mb-5">
             <Col xs={12}>
@@ -364,8 +358,8 @@ export default () => {
             </Col>
           </Row>
         </Container>
-      </section>
-      <section className="section section-lg bg-white" id="download">
+      </section> */}
+      {/* <section className="section section-lg bg-white" id="download">
         <Container>
           <Row>
             <Col xs={12} lg={8}>
@@ -478,7 +472,7 @@ export default () => {
             </Col>
           </Row>
         </Container>
-      </section>
+      </section> */}
       <footer className="footer py-6 bg-dark text-white">
         <Container>
           <Row>

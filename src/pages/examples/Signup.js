@@ -14,7 +14,7 @@ const USER_REGEX = /^[0-9]{3,10}$/;
 const PWD_REGEX = /^[0-9]{3,10}$/;
 const REGISTER_URL='register/';
 const Register = () => {
-
+const inputRef = useRef(null);
 const userRef = useRef();
 const errRef = useRef();
 const [username, setUsername] = useState('');
@@ -29,16 +29,19 @@ const [valideMatch , setValidMatch] = useState('');
 const [macthFaocus , setMatchFocus] = useState('');
 const[errMsg, setErrMsg] = useState ('') ;
 const[success, setSuccess] = useState ('') ;
-
+const [isShown, setIsSHown] = useState(false);
+const togglePassword = () => {
+  setIsSHown((isShown) => !isShown);
+};
 
 const [rol, setRol] = useState('');
 
 useEffect(() => {
-  setRol(JSON.parse(window.sessionStorage.getItem("rol")));
+  setRol(window.localStorage.getItem("rol"));
 }, []);
 
 useEffect(() => {
-  window.sessionStorage.setItem("rol", rol);
+  window.localStorage.setItem("rol", rol);
 }, [rol]);
 useEffect(() => {
   const result = USER_REGEX.test(username);
@@ -71,15 +74,15 @@ useEffect(() => {
     }
     
     try{
-      const response=axios.post(REGISTER_URL,{mode:'cors'},
-      JSON.stringify({username,password}),
+      axios.post(REGISTER_URL,({'username':username,'password':password}),
+      {mode:'cors'},
        {
           headers: {'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
           withCredentials: false
        }
     );
     console.log({'username':username,'password':password});
-    localStorage.setItem("rol", JSON.stringify('rol',rol)) 
+    sessionStorage.setItem("rol", JSON.stringify('rol',rol)) 
     setRol();
     setSuccess(true);
   
@@ -147,7 +150,8 @@ useEffect(() => {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUnlockAlt} />
                       </InputGroup.Text>
-                      <Form.Control required  type="password" id="password" placeholder="Password" 
+                      <Form.Control  required type={isShown ? "text" : "password"}
+                        name="password"  id="password" placeholder="Password" 
                       onChange={(e) => setPassword(e.target.value)}
                       onFocus={() => setPasswordFocus(true)}
                       onBlur={() => setPasswordFocus(false)}
@@ -161,7 +165,7 @@ useEffect(() => {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUnlockAlt} />
                       </InputGroup.Text>
-                      <Form.Control required  type="password" id="confirm_password" placeholder="Password" 
+                      <Form.Control required  type={isShown ? "text" : "password"} id="confirm_password" placeholder="Password" 
                       onChange={(e) => setMatchPwd(e.target.value)}
                       onFocus={() => setMatchFocus(true)}
                       onBlur={() => setMatchFocus(false)}
@@ -171,20 +175,22 @@ useEffect(() => {
                   </Form.Group>
                   <Form.Group required id="rol" className="mb-4" >
                      <Form.Select name="rol" id="rol"   
-                  value={rol}
+                  value={rol || ''}   ref={inputRef}
                   onChange={(e) =>setRol(e.target.value)}>
       <option >Choisir votre role</option>
-      <option value="1">Athlete</option>
+      <option value="athlete">Athlete</option>
       <option value="2">Entraineur</option>
       <option value="3">Président de club</option>
       <option value="4">Arbitre</option>
     </Form.Select>
-                 {rol}
+                 {/* {rol} */}
                   </Form.Group>
                   <FormCheck type="checkbox" className="d-flex mb-4">
-                    <FormCheck.Input required id="terms" className="me-2" />
-                    <FormCheck.Label htmlFor="terms">
-                    J'accepte les termes et conditions
+                    <FormCheck.Input required id="checkbox"
+            type="checkbox"
+            checked={isShown}
+            onChange={togglePassword} className="me-2" />
+                    <FormCheck.Label htmlFor="checkbox" className="mb-0">Afficher mot de passe?
                     </FormCheck.Label>
                   </FormCheck>
 
@@ -192,6 +198,7 @@ useEffect(() => {
                   disabled={!valideName || !valideMatch || !validePassword ? true : false} > 
                     enregistrer
                   </Button>
+                 
                 </Form>
 
                 <div className="mt-3 mb-4 text-center">
@@ -221,8 +228,11 @@ useEffect(() => {
           </Row>
         </Container>
       </section>
+      
     </main>)}
+    
     </>
   );
+  
 };
 export default Register;

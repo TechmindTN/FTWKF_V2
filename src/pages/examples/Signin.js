@@ -20,8 +20,14 @@ const userRef = useRef();
 const errRef = useRef();
 const [username, setUsername] = useState('');
 const [password , setPassword] = useState('');
+const [id, setId] = useState('');
+
 const[errMsg, setErrMsg] = useState ('') ;
-const[success, setSuccess] = useState ('') ;
+const[success, setSuccess] = useState (false) ;
+const [isShown, setIsSHown] = useState(false);
+const togglePassword = () => {
+  setIsSHown((isShown) => !isShown);
+};
 
 useEffect(() => {
   setErrMsg('');
@@ -30,19 +36,26 @@ useEffect(() => {
 const handleSubmit = async (e) =>{
   e.preventDefault();
   try{
-   const response=axios.post(LOGIN_URL, {mode:'cors'},
-   JSON.stringify(username, password),
+   const response=axios.post(LOGIN_URL,
+  ({'username':username,'password':password}),
+   {mode:'cors'},
     {
        headers: {'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
        withCredentials: false
     }
- );
- console.log({'username':username,'password':password})
-localStorage.setItem("username", JSON.stringify(username)) 
+ ).then((value) => {
+  console.log(value.data)
+  const token=value.data['token'];
+  const id=value.data.user_data['id'];
+  const first_name=value.data.user_data['first_name'];
+  localStorage.setItem('token',token)
+  localStorage.setItem('id',id)
+  localStorage.setItem('first_name',first_name)
  console.log('aaaa')
     setUsername('');
     setPassword('');
     setSuccess(true);
+    console.log(success) });
   }catch(err) {
 if(err?.response){
  setErrMsg('no Server response')
@@ -98,16 +111,20 @@ if(err?.response){
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faUnlockAlt} />
                         </InputGroup.Text>
-                        <Form.Control  type="password" required
+                        <Form.Control  required type={isShown ? "text" : "password"}
                         name="password" id="password" onChange={(e) =>setPassword(e.target.value)}
                       value={password}
                         />
                       </InputGroup>
+                      
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <Form.Check type="checkbox">
-                        <FormCheck.Input id="defaultCheck5" className="me-2" />
-                        <FormCheck.Label htmlFor="defaultCheck5" className="mb-0">Souviens-toi de moi</FormCheck.Label>
+                        <FormCheck.Input className="me-2"    id="checkbox"
+            type="checkbox"
+            checked={isShown}
+            onChange={togglePassword}/>
+                        <FormCheck.Label  htmlFor="checkbox" className="mb-0">Afficher mot de passe?</FormCheck.Label>
                       </Form.Check>
                       {/* <Card.Link className="small text-end">Lost password?</Card.Link> */}
                     </div>
