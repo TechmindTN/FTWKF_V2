@@ -4,7 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faCog, faEnvelopeOpen, faSearch, faSignOutAlt, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Nav, Form, Image, Navbar, Dropdown, Container, ListGroup, InputGroup } from '@themesberg/react-bootstrap';
+import { Link } from 'react-router-dom';
 
+import { Routes } from "../routes";
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
 
@@ -16,6 +18,14 @@ export const Top = () => {
   useEffect(() => {
     setUsername(window.localStorage.getItem("username"));
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
+   window.history.push('/login');
+    setIsLoggedin(false);
+  };
+
   const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
   const areNotificationsRead = notifications.reduce((acc, notif) => acc && notif.read, true);
 
@@ -53,6 +63,7 @@ export const Top = () => {
   };
 
   return (
+    
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
       <Container fluid className="px-0">
         <div className="d-flex justify-content-between w-100">
@@ -99,8 +110,8 @@ export const Top = () => {
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Menu className="user-dropdown dropdown-menu-right mt-2">
-                <Dropdown.Item className="fw-bold">
-                  <FontAwesomeIcon icon={faUserCircle} className="me-2"  /> My Profile
+                <Dropdown.Item className="fw-bold" as={Link} to={Routes.Settings.path}>
+                  <FontAwesomeIcon icon={faUserCircle} className="me-2"   /> My Profile
                 </Dropdown.Item>
                 <Dropdown.Item className="fw-bold">
                   <FontAwesomeIcon icon={faCog} className="me-2" /> Settings
@@ -114,7 +125,7 @@ export const Top = () => {
 
                 <Dropdown.Divider />
 
-                <Dropdown.Item className="fw-bold">
+                <Dropdown.Item className="fw-bold" onClickCapture={logout}>
                   <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>

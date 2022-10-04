@@ -14,6 +14,9 @@ import HomePage from '../HomePage';
 import DashboardOverview from '../HomePage';
 import axios from "./api/axios";
 const LOGIN_URL='login/';
+
+
+
 const Login = ()=> {
 const{setAuth} = useContext(AuthContext);
 const userRef = useRef();
@@ -25,6 +28,8 @@ const [id, setId] = useState('');
 const[errMsg, setErrMsg] = useState ('') ;
 const[success, setSuccess] = useState (false) ;
 const [isShown, setIsSHown] = useState(false);
+const [isLoggedin, setIsLoggedin] = useState(false);
+
 const togglePassword = () => {
   setIsSHown((isShown) => !isShown);
 };
@@ -47,13 +52,11 @@ const handleSubmit = async (e) =>{
   console.log(value.data)
   const token=value.data['token'];
   const id=value.data.user_data['id'];
-  const first_name=value.data.user_data['first_name'];
+  const username=value.data.user_data['username'];
   localStorage.setItem('token',token)
   localStorage.setItem('id',id)
-  localStorage.setItem('first_name',first_name)
- console.log('aaaa')
-    setUsername('');
-    setPassword('');
+  localStorage.setItem('username',username)
+  setIsLoggedin(true);
     setSuccess(true);
     console.log(success) });
   }catch(err) {
@@ -61,16 +64,43 @@ if(err?.response){
  setErrMsg('no Server response')
  } else if(err?.response?.status ===400) {
    setErrMsg('username ou password incorrecte');
-} else if (err?.response?.status === 401){
-   setErrMsg('unautherized');
+  } else if (err?.response?.status === 401){
+    setErrMsg('unautherized');
+ }else if (err?.response?.status === 404){
+  setErrMsg('unautherized');
 } else{   setErrMsg('Login failed');
-}  
+} 
+errRef.current.focus(); 
   }
 }
   return (
     <> 
     {success ? (
-        <DashboardOverview />
+        <section className="d-flex align-items-center my-58 mt-lg-4 mb-lg-5">
+        <Container>
+         
+          <Row className="justify-content-center form-bg-image" style={{ backgroundImage: `url(${BgImage})` }}>
+            <Col xs={12} className="d-flex align-items-center justify-content-center">
+              <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+              <div className="text-center text-md-center mb-4 mt-md-0">
+              <Image src={logo}className="navbar-brand-light"  />
+
+                </div>
+                <div className="text-center text-md-center mb-4 mt-md-0">
+                  <h3 className="mb-0">Login successful</h3>
+                </div>
+                <p className="text-center">
+            <Card.Link as={Link} to={Routes.DashboardOverview.path} className="text-gray-700">
+              <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Continuer l'inscription
+            </Card.Link>
+          </p>
+
+               
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
         ) : (
     <main>
       <section className="d-flex align-items-center my-58 mt-lg-4 mb-lg-5">

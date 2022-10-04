@@ -85,17 +85,17 @@ export default () => {
             <Image src={logo} width={80} height={70} className="mb-3" alt="Themesberg Logo"/>
           
 
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center ">
             <Navbar.Collapse id="navbar-default-primary">
               <Nav className="navbar-nav-hover align-items-lg-center">
               <Nav.Link as={Link} to={Routes.Signin.path}>S'identifier</Nav.Link>
               <Nav.Link as={Link} to={Routes.Signup.path}>Enregistrer</Nav.Link>
-                <Nav.Link as={HashLink} to="#pages">Pages</Nav.Link>
+                {/* <Nav.Link as={HashLink} to="#pages">Pages</Nav.Link>
                 <Nav.Link as={HashLink} to="#folder" className="d-sm-none d-xl-inline">Folder Structure</Nav.Link>
-                <Nav.Link as={HashLink} to="#getting-started">Getting Started</Nav.Link>
+                <Nav.Link as={HashLink} to="#getting-started">Getting Started</Nav.Link> */}
               </Nav>
             </Navbar.Collapse>
-            <Button as={HashLink} to="#download" variant="outline-white" className="ms-3"><FontAwesomeIcon icon={faDownload} className="me-1" /> Download</Button>
+            {/* <Button as={HashLink} to="#download" variant="outline-white" className="ms-3"><FontAwesomeIcon icon={faDownload} className="me-1" /> Download</Button> */}
           </div>
         </Container>
       </Navbar>

@@ -23,23 +23,22 @@
 	}
 
 	.nav-item {
-		border: $border-width solid transparent;
+		
 		&.active {
 			& > .nav-link {
 				color: $light;
-				background-color: #2e3650;
-				border: $border-width solid lighten( $dark, 20% );
+				background-color:$primary;
 			}
 		}
 		.nav-link {
 			color: $light;
-			border: $border-width solid $dark;
+			background-color: $primary;
 			&:hover {
 				color: $light;
-				background-color: #2e3650;
+				background-color: $primary;
 			}
 			&.active {
-				color: $white;
+				color: $dark;
 			}
 		}
 		margin-bottom: .2rem;
@@ -172,9 +171,9 @@
 	.accordion-button{
 		&::after {
 			background-image: none;
-			content: '\f054';
+			content: ">";
 			font-family: $font-awesome-5;
-			font-size: $font-size-sm;
+			font-size: 10px;
 			font-weight: 900;
 			height:1.25rem;
 			width:.5rem;
@@ -194,10 +193,12 @@
 
 	.accordion-body {
 		padding: .5rem 0 0 0;
+		background-color: $primary;
 	}
 
 	.accordion-collapse{
 		border:0;
+		background-color: #2e3650;
 	}
 }
 
@@ -234,7 +235,7 @@
 	&:focus {
 		outline: none;
 		box-shadow: none;
-		background: $gray-400;
+		background: $dark;
 	}
 
 }

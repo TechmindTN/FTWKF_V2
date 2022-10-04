@@ -39,8 +39,8 @@
     &.nav-dark{
         .nav-link{
             &.active{
-                color: $white;
-                background-color: #12358a;
+                color: $primary;
+                background-color: $primary;
             }
         }
     }
@@ -49,7 +49,7 @@
         .nav-link{
             &.active{
                 color: $black;
-                background-color: $light;
+                background-color: $primary;
             }
             &:hover{
                 color:$black;

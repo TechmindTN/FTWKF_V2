@@ -7,7 +7,12 @@ import Signin from './pages/examples/Signin';
 import Settings from './components/Navbar';
 
 function App(){
- 
+  const [username, setUsername] = useState('');
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  
+  useEffect(() => {
+    setUsername(window.localStorage.getItem("username"));
+  }, []);
 
   return (
     <main className="wrapper">

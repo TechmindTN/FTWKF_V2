@@ -69,15 +69,20 @@ export const GeneralInfoForm = () => {
   },[city,country,phone])
   const handlesubmit = async (e) => {
     e.preventDefault();
-    const token = '903f1e172269c9d3046929b31c035beb488c860b2fb65b12733ecd793c32152b';
-    axios.post(PROFILE_URL,({'city':city,'country':country,'phone':phone,'role':rol,'id':id}),{mode:'cors'},
-    
+    const token = localStorage.getItem("token");
+    const headers = { 
+      'Authorization':  `Bearer ${token}`,
+      'Content-Type':'application/json',
+      'Access-Control-Allow-Origin':'Accept'
+  };
+    axios.post(PROFILE_URL,({city,country,phone,role:rol,id}),
      {
-        headers: {'Authorization': `Basic ${token}`,'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
+        headers,
         withCredentials: false
-     }
+        
+     },{mode:'cors'}
   );
-   console.log({'city':city,'country':country,'phone':phone,'rol':rol,'id':id})
+   console.log({'city':city,'country':country,'phone':phone,'role':rol,'id':id})
     setSuccess(true);
    
   }
@@ -85,16 +90,11 @@ export const GeneralInfoForm = () => {
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
-        <h5 className="mb-4">Informations Generales {id}</h5>
+        <h5 className="mb-4">Informations Generales </h5>
         <Form onSubmit={handlesubmit}>
           <Row>
-          <Col md={4} className="mb-3">
-              <Form.Group id="firstName">
-                <Form.Label>Role : {rol}</Form.Label>
-
-              </Form.Group>              
-            </Col>
-            <Col md={4} className="mb-3">
+          
+            <Col md={6} className="mb-3">
               <Form.Group id="firstName">
                 <Form.Label>Nom</Form.Label>
                 <Form.Control required type="text" id="fname" name="fname" placeholder="votre Nom" 
@@ -103,7 +103,7 @@ export const GeneralInfoForm = () => {
                 />
               </Form.Group>
             </Col>
-            <Col md={4} className="mb-3">
+            <Col md={6} className="mb-3">
               <Form.Group id="lastName">
                 <Form.Label>Prenom</Form.Label>
                 <Form.Control required type="text" id="lname" name="lname" placeholder="votre prenom"
@@ -138,7 +138,7 @@ export const GeneralInfoForm = () => {
             <Col md={6} className="mb-3">
               <Form.Group id="gender">
                 <Form.Label>Gendre</Form.Label>
-                <Form.Select defaultValue="0" id="gender"  name="gender"
+                <Form.Select id="gender"  name="gender"
                                 autoComplete="off" onChange={(e) =>setGender(e.target.value)}
                                 value={gender}
                 >
@@ -202,7 +202,7 @@ export const GeneralInfoForm = () => {
             <Col sm={4} className="mb-3">
               <Form.Group className="mb-2">
                 <Form.Label>Gouvernerat</Form.Label>
-                <Form.Select id="city" defaultValue="0"  name="cityt"
+                <Form.Select id="city"   name="cityt"
                 
                 autoComplete="off" onChange={(e) =>setCity(e.target.value)}
                                                 value={city}
@@ -275,7 +275,7 @@ export const GeneralInfoForm = () => {
             <Col sm={4} className="mb-3">
               <Form.Group id="addrclubess">
                 <Form.Label>Club</Form.Label>
-                <Form.Select name="club" id="club"    defaultValue="2"
+                <Form.Select name="club" id="club"    
                   value={club} autoComplete="off"
                   onChange={(e) =>setClub(e.target.value)}>
       <option value="0" >Choisir votre club </option>

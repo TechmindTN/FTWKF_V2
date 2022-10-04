@@ -168,11 +168,11 @@
 
     &:not(.headroom--not-top) {
         .btn-outline-soft {
-            border-color: $dark;
+            border-color: $primary;
             color: $dark;
     
             &:hover {
-                background: $dark;
+                background: $primary;
                 color: $white;
             }
         }
@@ -441,7 +441,7 @@
                 height: 2px;
                 border-radius: 2px;
                 opacity: 1;
-                background: #283448;
+                background: $primary;
             }
         }
 

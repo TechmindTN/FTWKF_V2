@@ -1,8 +1,8 @@
 /**
- * = Accordions
+ * = s
  */
 
- .accordion-button {
+ .-button {
     text-align: left;
 
     .btn-check:focus + .btn, .btn:focus {
@@ -11,26 +11,26 @@
     }
     
     &:hover{
-        background-color: $gray-200;
+        background-color: $dark;
     }
 }
 
-// Flush accordion items
+// Flush  items
 //
-// Remove borders and border-radius to keep accordion items edge-to-edge.
+// Remove borders and border-radius to keep  items edge-to-edge.
 
-.accordion-flush {
-    .accordion-button {
-        background-color: transparent;
+.-flush {
+    .-button {
+        background-color: $dark;
         &:not(.collapsed) {
             color: $secondary;
         }
         &:focus {
-            border-color: $gray-300;
+            border-color: $dark;
             box-shadow: none;
         }
     }
-    .accordion-collapse {
+    .-collapse {
         border: 0;
     }
 }

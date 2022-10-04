@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faEdit, faEllipsisH, faExternalLinkAlt, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
@@ -44,6 +44,7 @@ export const PageVisitsTable = () => {
   };
 
   return (
+    
     <Card border="light" className="shadow-sm">
       <Card.Header>
         <Row className="align-items-center">
@@ -55,6 +56,8 @@ export const PageVisitsTable = () => {
           </Col>
         </Row>
       </Card.Header>
+     
+
       <Table responsive className="align-items-center table-flush">
         <thead className="thead-light">
           <tr>
@@ -73,36 +76,59 @@ export const PageVisitsTable = () => {
 };
 
 export const PageTrafficTable = () => {
+  const [showDefault, setShowDefault] = useState(false);
+const handleClose = () => setShowDefault(false);
   const TableRow = (props) => {
     const { id, source, sourceIcon, sourceIconColor, sourceType, category, rank, trafficShare, change } = props;
 
     return (
-      <tr>
-        <td>
-          <Card.Link href="#" className="text-primary fw-bold">{id}</Card.Link>
+      
+      <tr >
+        <td className="border-0 ">
+          <Card.Link href="#" className="text-primary ">{id}</Card.Link>
         </td>
-        <td className="fw-bold">
+        <td className="border-0 ">
           <FontAwesomeIcon icon={sourceIcon} className={`icon icon-xs text-${sourceIconColor} w-30`} />
           {source}
         </td>
-        <td>{sourceType}</td>
-        <td>{category ? category : "--"}</td>
-        <td>{rank ? rank : "--"}</td>
-        <td>
+        <td className="border-0 ">{sourceType}</td>
+        <td className="border-0 ">{category ? category : "--"}</td>
+        <td className="border-0 ">{rank ? rank : "--"}</td>
+        <td className="border-0 ">
           <Row className="d-flex align-items-center">
             <Col xs={12} xl={2} className="px-0">
-              <small className="fw-bold">{trafficShare}%</small>
+              <small className="border-0">{trafficShare}%</small>
             </Col>
             <Col xs={12} xl={10} className="px-0 px-xl-1">
               <ProgressBar variant="primary" className="progress-lg mb-0" now={trafficShare} min={0} max={100} />
             </Col>
           </Row>
         </td>
-        <td>
+        <td className="border-0 ">
           <ValueChange value={change} suffix="%" />
         </td>
+        <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details</Button></td>
       </tr>
+      
     );
+    <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
+    <Modal.Header>
+      <Modal.Title className="h6">Terms of Service</Modal.Title>
+      <Button variant="close" aria-label="Close" onClick={handleClose} />
+    </Modal.Header>
+    <Modal.Body>
+      <p>With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.</p>
+      <p>The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.</p>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleClose}>
+        I Got It
+    </Button>
+      <Button variant="link" className="text-gray ms-auto" onClick={handleClose}>
+        Close
+    </Button>
+    </Modal.Footer>
+  </Modal>
   };
 
   return (
@@ -111,25 +137,34 @@ export const PageTrafficTable = () => {
         <Table responsive className="table-centered table-nowrap rounded mb-0">
           <thead className="thead-light">
             <tr>
-              <th className="border-0">#</th>
-              <th className="border-0">Traffic Source</th>
-              <th className="border-0">Source Type</th>
-              <th className="border-0">Category</th>
-              <th className="border-0">Global Rank</th>
-              <th className="border-0">Traffic Share</th>
-              <th className="border-0">Change</th>
+              <th className="border-0">Licence</th>
+              <th className="border-0">CIN</th>
+              <th className="border-0">Nom</th>
+              <th className="border-0">Prenom</th>
+              <th className="border-0">Date Naissance</th>
+              <th className="border-0">Nationalité </th>
+              <th className="border-0">Age</th>
+              <th className="border-0">Actions</th>
+              {/* <th className="border-0">sexe</th>
+              <th className="border-0">Club</th>
+              <th className="border-0">Ligue</th>
+              <th className="border-0">Ligue</th> */}
+             
             </tr>
           </thead>
           <tbody>
             {pageTraffic.map(pt => <TableRow key={`page-traffic-${pt.id}`} {...pt} />)}
+            
           </tbody>
         </Table>
       </Card.Body>
     </Card>
+    
   );
 };
 
 export const RankingTable = () => {
+  
   const TableRow = (props) => {
     const { country, countryImage, overallRank, overallRankChange, travelRank, travelRankChange, widgetsRank, widgetsRankChange } = props;
 
@@ -169,13 +204,13 @@ export const RankingTable = () => {
         <Table responsive className="table-centered table-nowrap rounded mb-0">
           <thead className="thead-light">
             <tr>
-              <th className="border-0">Country</th>
-              <th className="border-0">All</th>
-              <th className="border-0">All Change</th>
-              <th className="border-0">Travel & Local</th>
-              <th className="border-0">Travel & Local Change</th>
-              <th className="border-0">Widgets</th>
-              <th className="border-0">Widgets Change</th>
+              <th className="border-0">Id</th>
+              <th className="border-0">Club</th>
+              <th className="border-0">Ligue</th>
+              <th className="border-0">Licence</th>
+              <th className="border-0">Président de club</th>
+              <th className="border-0">Phone</th>
+              <th className="border-0">Email</th>
             </tr>
           </thead>
           <tbody>
@@ -258,13 +293,13 @@ export const TransactionsTable = () => {
         <Table hover className="user-table align-items-center">
           <thead>
             <tr>
-              <th className="border-bottom">#</th>
-              <th className="border-bottom">Bill For</th>
-              <th className="border-bottom">Issue Date</th>
-              <th className="border-bottom">Due Date</th>
-              <th className="border-bottom">Total</th>
-              <th className="border-bottom">Status</th>
-              <th className="border-bottom">Action</th>
+              <th className="border-bottom">Num</th>
+              <th className="border-bottom">Licence</th>
+              <th className="border-bottom">Nom</th>
+              <th className="border-bottom">Prénom</th>
+              <th className="border-bottom">Profile</th>
+              <th className="border-bottom">Saison</th>
+              <th className="border-bottom">Actions</th>
             </tr>
           </thead>
           <tbody>

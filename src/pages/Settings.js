@@ -13,10 +13,10 @@ export default () => {
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <Dropdown>
-          <Dropdown.Toggle as={Button} variant="secondary" className="text-dark me-2">
+          {/* <Dropdown.Toggle as={Button} variant="secondary" className="text-dark me-2">
             <FontAwesomeIcon icon={faPlus} className="me-2" />
             <span>New</span>
-          </Dropdown.Toggle>
+          </Dropdown.Toggle> */}
           <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-2">
             <Dropdown.Item>
               <FontAwesomeIcon icon={faFileAlt} className="me-2" /> Document
@@ -38,10 +38,10 @@ export default () => {
 
         <div className="d-flex">
           <Dropdown>
-            <Dropdown.Toggle as={Button} variant="primary">
+            {/* <Dropdown.Toggle as={Button} variant="primary">
               <FontAwesomeIcon icon={faClipboard} className="me-2" /> Reports
               <span className="icon icon-small ms-1"><FontAwesomeIcon icon={faChevronDown} /></span>
-            </Dropdown.Toggle>
+            </Dropdown.Toggle> */}
             <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-1">
               <Dropdown.Item>
                 <FontAwesomeIcon icon={faBoxOpen} className="me-2" /> Products
