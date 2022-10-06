@@ -9,6 +9,7 @@ import { Routes } from "../../routes";
 import logo from "../../assets/img/logo-ftwkf.png";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import axios from "./api/axios";
+import Role from "../examples/Role"
 import HomePage from "../HomePage";
 const USER_REGEX = /^[0-9]{3,10}$/;
 const PWD_REGEX = /^[0-9]{3,10}$/;
@@ -80,14 +81,16 @@ useEffect(() => {
           headers: {'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
           withCredentials: false
        }
-    );
+    )
+    .then((response) => {;
+    console.log(response?.data)
     console.log({'username':username,'password':password});
     sessionStorage.setItem("rol", JSON.stringify('rol',rol)) 
     setRol();
     setSuccess(true);
   
       // storing input rol
-    
+    })
     } catch(err){
       if(err?.response){
         setErrMsg('no Server response')
@@ -104,31 +107,8 @@ useEffect(() => {
 
   return (
     <>{success ? (
-      <section className="d-flex align-items-center my-58 mt-lg-4 mb-lg-5">
-      <Container>
-       
-        <Row className="justify-content-center form-bg-image" style={{ backgroundImage: `url(${BgImage})` }}>
-          <Col xs={12} className="d-flex align-items-center justify-content-center">
-            <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-            <div className="text-center text-md-center mb-4 mt-md-0">
-            <Image src={logo}className="navbar-brand-light"  />
-
-              </div>
-              <div className="text-center text-md-center mb-4 mt-md-0">
-                <h3 className="mb-0">Register successful</h3>
-              </div>
-              <p className="text-center">
-          <Card.Link as={Link} to={Routes.DashboardOverview.path} className="text-gray-700">
-            <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Continuer l'inscription
-          </Card.Link>
-        </p>
-
-             
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>      ) : (
+      <Role />
+       ) : (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-4 mb-lg-5">
         <Container>

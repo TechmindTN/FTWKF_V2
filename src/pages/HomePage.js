@@ -8,6 +8,7 @@ import Upgrade from "./Upgrade";
 import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
 import Settings from "./Settings";
+import Profile from "./Profile";
 import BootstrapTables from "./tables/BootstrapTables";
 import Athletes from "./tables/Athletes";
 import Clubs from "./tables/Clubs";
@@ -15,6 +16,8 @@ import Licence from "./tables/Licence";
 
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
+import Role from "./examples/Role";
+
 import ForgotPassword from "./examples/ForgotPassword";
 import ResetPassword from "./examples/ResetPassword";
 import Lock from "./examples/Lock";
@@ -122,6 +125,8 @@ export default () => (
     <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} />
     <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
    <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
+   <RouteWithLoader exact path={Routes.Role.path} component={Role} />
+
     <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} />
     <RouteWithLoader exact path={Routes.ResetPassword.path} component={ResetPassword} />
     <RouteWithLoader exact path={Routes.Lock.path} component={Lock} />
@@ -133,6 +138,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.Upgrade.path} component={Upgrade} />
     <RouteWithSidebar exact path={Routes.Transactions.path} component={Transactions} />
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
+    <RouteWithSidebar exact path={Routes.Profile.path} component={Profile} />
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
     <RouteWithSidebar exact path={Routes.Athletes.path} component={Athletes} />
     <RouteWithSidebar exact path={Routes.Clubs.path} component={Clubs} />

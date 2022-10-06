@@ -41,7 +41,7 @@ useEffect(() => {
 const handleSubmit = async (e) =>{
   e.preventDefault();
   try{
-   const response=axios.post(LOGIN_URL,
+ axios.post(LOGIN_URL,
   ({'username':username,'password':password}),
    {mode:'cors'},
     {
@@ -73,6 +73,26 @@ if(err?.response){
 errRef.current.focus(); 
   }
 }
+useEffect(() => {
+    fetch(`https://6e73-197-14-10-36.eu.ngrok.io/api/athlete/?format=json`,{
+      headers: {'Authentication':'BEARER ',  'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Methods': 'Accept'},
+      withCredentials: false
+   })
+      .then((response) => {
+        
+        if (!response.ok) {
+          throw new Error(
+            `This is an HTTP error: The status is ${response.status}`
+          );
+        }
+        return data=response.json();
+      })
+      .then((actualData) => console.log(actualData))
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+ 
   return (
     <> 
     {success ? (
@@ -87,7 +107,7 @@ errRef.current.focus();
 
                 </div>
                 <div className="text-center text-md-center mb-4 mt-md-0">
-                  <h3 className="mb-0">Login successful</h3>
+                  <h3 className="mb-0">Login successful {username}</h3>
                 </div>
                 <p className="text-center">
             <Card.Link as={Link} to={Routes.DashboardOverview.path} className="text-gray-700">

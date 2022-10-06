@@ -106,8 +106,8 @@ export const Sidebar = () => {
               <Image src={logo} width={100} height={100}  /> <p> {username}</p>
     
               <NavItem title="Acceuil" link={Routes.DashboardOverview.path} icon={faChartPie} />
-              <NavItem title="Profile" icon={faCog} link={Routes.Settings.path} />
-
+              <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
+              <NavItem title="Profile" icon={faCog} link={Routes.Profile.path} />
               <CollapsableNavItem eventKey="tables/" title="Athletes" icon={faTable}>
                 <NavItem title="Liste des athletes" link={Routes.Athletes.path} />
               </CollapsableNavItem>

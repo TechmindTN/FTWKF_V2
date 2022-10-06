@@ -72,7 +72,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "proxy": "https://b617-197-14-10-36.eu.ngrok.io/api/login/",
   "browserslist": {
     "production": [
       ">0.2%",

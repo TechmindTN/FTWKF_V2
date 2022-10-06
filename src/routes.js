@@ -5,6 +5,8 @@ export const Routes = {
     DashboardOverview: { path: "/dashboard/overview" },
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
+    Profile: { path: "/profile" },
+
     Upgrade: { path: "/upgrade" },
     BootstrapTables: { path: "/tables/bootstrap-tables" },
     Athletes:{path: "/tables/Athletes"},
@@ -14,6 +16,7 @@ export const Routes = {
     Invoice: { path: "/examples/invoice" },
     Signin: { path: "/examples/sign-in" },
     Signup: { path: "/examples/sign-up" },
+    Role: { path: "/examples/Role" },
     ForgotPassword: { path: "/examples/forgot-password" },
     ResetPassword: { path: "/examples/reset-password" },
     Lock: { path: "/examples/lock" },

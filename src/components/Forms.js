@@ -9,12 +9,9 @@ import axios from "../pages/examples/api/axios";
 const PROFILE_URL ='profile/';
 
 export const GeneralInfoForm = () => {
-  const [rol, setRol] = useState('');
 
-  useEffect(() => {
-    setRol(window.localStorage.getItem("rol"));
-  }, []);
-  const [fname, setFname] = useState('');
+ 
+  const [fname, setFname] = useState();
   const [valideFname , setValidFname] = useState('');
   const [lname, setLname] = useState('');
   const [valideLname , setValidLname] = useState('');
@@ -71,7 +68,7 @@ export const GeneralInfoForm = () => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const headers = { 
-      'Authorization':  `Bearer ${token}`,
+      'Authorization':  `TOKEN ${token}`,
       'Content-Type':'application/json',
       'Access-Control-Allow-Origin':'Accept'
   };
@@ -86,11 +83,19 @@ export const GeneralInfoForm = () => {
     setSuccess(true);
    
   }
+  // const userNames = ['Jesse', 'Tom', 'Anna']
+  // const renderListOfUserNames = (names) => {
+  //   return names.map(name => <li>{name}</li>)
+  // }
 
+
+
+  
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
         <h5 className="mb-4">Informations Generales </h5>
+     
         <Form onSubmit={handlesubmit}>
           <Row>
           
