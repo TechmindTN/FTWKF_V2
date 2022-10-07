@@ -10,28 +10,22 @@ import axios from 'axios';
 const ATHLETE_URL='athlete/?format=json'
 
 function Athletes (){
-
+const[datas,setData]=useState('');
 
   
   const[id,setId]=useState([])
   useEffect(() => {
-    fetch(`https://cc3d-197-0-144-55.eu.ngrok.io/api/athlete/?format=json`,{
+    fetch(`https://cf13-102-158-87-105.eu.ngrok.io/api/athlete/`,{
       headers: {'Content-Type': 'application/x-www-form-urlencoded','Authentication':'BEARER 7d724f4762ff08ebbf6aa9a8534ef4c737c1f9462b9acf43b2b108ade86c90d5',  'Access-Control-Allow-Methods': 'Accept'},
       withCredentials: false
    })
-      .then((response) => {
-        
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        return data=response.json();
-      })
-      .then((actualData) => console.log(actualData))
-      .catch((err) => {
-        console.log(err.message);
-      });
+   .then(async (response) => {
+      
+    const data = await response.json();
+    const arr=data[0]
+    console.log(arr)
+    setData(arr)
+       })
   }, []);
  
 // useEffect(()=> {
@@ -66,7 +60,6 @@ function Athletes (){
             <Breadcrumb.Item active>Athletes</Breadcrumb.Item>
           </Breadcrumb>
           <h4>Liste des athletes</h4>
-      
 
        </div>
       </div>

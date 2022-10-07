@@ -9,6 +9,8 @@ import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
 import Settings from "./Settings";
 import Profile from "./Profile";
+import EditeProfile from "./Editprofile";
+
 import BootstrapTables from "./tables/BootstrapTables";
 import Athletes from "./tables/Athletes";
 import Clubs from "./tables/Clubs";
@@ -139,6 +141,8 @@ export default () => (
     <RouteWithSidebar exact path={Routes.Transactions.path} component={Transactions} />
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
     <RouteWithSidebar exact path={Routes.Profile.path} component={Profile} />
+    <RouteWithSidebar exact path={Routes.EditeProfile.path} component={EditeProfile} />
+
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
     <RouteWithSidebar exact path={Routes.Athletes.path} component={Athletes} />
     <RouteWithSidebar exact path={Routes.Clubs.path} component={Clubs} />

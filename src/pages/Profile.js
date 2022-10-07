@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faBoxOpen, faCartArrowDown, faChartPie, faChevronDown, faClipboard, faCommentDots, faFileAlt, faPlus, faRocket, faStore } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Card, Form, Button, InputGroup } from '@themesberg/react-bootstrap';
-
+import { Col, Row, Card, Form, Button, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
+import { Routes } from "../routes";
 import { Link } from 'react-router-dom';
 import Datetime from "react-datetime";
 import { faCalendarAlt,faPaperclip } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ export const Profile = () =>  {
   const [first_name, setFname] = useState();
   const [last_name, setLname] = useState();
   const [country, setCountry] = useState();
+  const [birthday, setBirthday] = useState();
   const [state, setState] = useState();
   const [city, setCity] = useState();
   const [address, setAddress] = useState();
@@ -25,19 +26,23 @@ export const Profile = () =>  {
   const [licences, setLicences] = useState();
   useEffect(() => {
  
-    fetch(`https://cc3d-197-0-144-55.eu.ngrok.io/api/pro/${window.localStorage.getItem("id")}/`,{
+    fetch(`https://cf13-102-158-87-105.eu.ngrok.io/api/pro/${window.localStorage.getItem("id")}/`,{
       headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':'TOKEN 7d724f4762ff08ebbf6aa9a8534ef4c737c1f9462b9acf43b2b108ade86c90d5',  'Access-Control-Allow-Methods': 'Accept'},
       withCredentials: false
    })
       .then(async (response) => {
       
-    const data = await response.json();
+   const data = await response.json();
    console.log(data)
    setCountry(data.country)
    setFname(data.first_name)
    setLname(data.last_name)
    setPhone(data.phone)
- 
+   setBirthday(data.birthday)
+   setRole(data.role)
+ if(role ===1){
+  setRole('Athlete')
+ }
 
       })
     
@@ -46,12 +51,30 @@ export const Profile = () =>  {
 
     return (
       <Card border="light" className="bg-white shadow-sm mb-4">
+        
+           
         <Card.Body>
-          <h5 className="mb-4">Informations Generales </h5>
+        <Row>
+            <Col md={10} className="mb-3">
+          <h5 className="mb-4">Informations Generales </h5></Col>
+          <Col md={2} className="mb-3">
+          <Dropdown.Toggle  variant="primary" as={Link} to={Routes.EditeProfile.path}>
+              <FontAwesomeIcon icon={faClipboard} className="me-2" /> Edite Profile
+              <span className="icon icon-small ms-1"><FontAwesomeIcon icon={faChevronDown} /></span>
+            </Dropdown.Toggle></Col>
+            </Row>
           <Form >
             <Row>
-            
-              <Col md={6} className="mb-3">
+            <Col md={4} className="mb-3">
+                <Form.Group id="emal">
+                  <Form.Label>Role</Form.Label>
+                  <Form.Control required type="email" id="email"  value={role} onChange={(e) =>setRole(e.target.value)}
+                                  autoComplete="off" 
+                                 
+                  name="email" placeholder="name@company.com" />
+                </Form.Group>
+              </Col>
+              <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>Nom</Form.Label>
                   <Form.Control required type="text" id="first_name" name="first_name" 
@@ -59,7 +82,7 @@ export const Profile = () =>  {
                                     />
                 </Form.Group>
               </Col>
-              <Col md={6} className="mb-3">
+              <Col md={4} className="mb-3">
                 <Form.Group id="lastName">
                   <Form.Label>Prenom</Form.Label>
                   <Form.Control required type="text" id="lname" name="lname" placeholder="votre prenom"
@@ -83,7 +106,7 @@ export const Profile = () =>  {
                           required
                           type="text" id="birthday"  name="birthday"
                         
-                          placeholder="mm/dd/yyyy"
+                          placeholder="mm/dd/yyyy" value={birthday}
                           onFocus={openCalendar}
                           autoComplete="off" 
                           />
@@ -94,7 +117,7 @@ export const Profile = () =>  {
               <Col md={6} className="mb-3">
                 <Form.Group id="gender">
                   <Form.Label>Gendre</Form.Label>
-                  <Form.Select id="gender"  name="gender"
+                  <Form.Select id="gender"  name="gender" 
                                   autoComplete="off" 
                                
                   >
@@ -109,7 +132,7 @@ export const Profile = () =>  {
               <Col md={6} className="mb-3">
                 <Form.Group id="emal">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control required type="email" id="email"  
+                  <Form.Control required type="email" id="email"  value={role}
                                   autoComplete="off" 
                                  
                   name="email" placeholder="name@company.com" />
@@ -148,9 +171,8 @@ export const Profile = () =>  {
               <Col sm={4} className="mb-3">
                 <Form.Group id="country">
                   <Form.Label>country</Form.Label>
-                  <Form.Control required type="text" placeholder="country"  id="country"  name="country"
+                  <Form.Control  type="text" placeholder="country"  id="country"  name="country"
                   value={country}
-                  autoComplete="off" 
                                               
                   />
                 </Form.Group>
@@ -225,94 +247,7 @@ export const Profile = () =>  {
                 </Form.Group>
               </Col>
             </Row>
-            <h5 className="my-4">Infromations Complementaires</h5>
-            <Row>
-              <Col sm={4} className="mb-3">
-                <Form.Group id="addrclubess">
-                  <Form.Label>Club</Form.Label>
-                  <Form.Select name="club" id="club"    
-                    >
-        <option value="0" >Choisir votre club </option>
-        <option value="1">Athlete</option>
-        <option value="2">Entraineur</option>
-        <option value="3">Président de club</option>
-        <option value="4">Arbitre</option>
-      </Form.Select>
-                 
-                </Form.Group>
-              </Col>
-              <Col sm={4} className="mb-3">
-                <Form.Group id="addressNumber">
-                  <Form.Label>Descipline</Form.Label>
-                  <Form.Control required type="number" placeholder="No." id="sport"  name="sport"
-                                
-                  />
-                </Form.Group>
-              </Col>
-              <Col sm={4} className="mb-3">
-                <Form.Group id="addressNumber">
-                  <Form.Label>Ligue</Form.Label>
-                  <Form.Control required type="number" placeholder="No." id="ligue"  name="ligue"
-                                            
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={4} className="mb-3">
-                <Form.Group id="city">
-                  <Form.Label>Age</Form.Label>
-                  <Form.Control required type="text" placeholder="City" id="age"  name="age"
-                  
-                 
-                  />
-                </Form.Group>
-              </Col>
           
-              <Col sm={4}>
-                <Form.Group id="identite">
-                  <Form.Label>Photo d'identite</Form.Label>
-                  <div className="file-field">
-              <div className="d-flex justify-content-xl ">
-                <div className="d-flex">
-                  <span className="icon icon-md">
-                    <FontAwesomeIcon icon={faPaperclip} className="me-3" />
-                  </span>
-                  <input type="file" id="identite"  name="identite" required    
-                 />
-                  <div className="d-md-block text-start">
-                    <div className="fw-normal text-dark mb-1">Choisir Image</div>
-                    <div className="text-gray small">JPG, GIF, PDF ou PNG</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group id="medical">
-                  <Form.Label>Certificat Médicale</Form.Label>
-                  <div className="file-field">
-              <div className="d-flex justify-content-xl ">
-                <div className="d-flex">
-                  <span className="icon icon-md">
-                    <FontAwesomeIcon icon={faPaperclip} className="me-3" />
-                  </span>
-                  <input type="file"  id="medical"  name="medical"     required    autoComplete="off"
-                 />
-                  <div className="d-md-block text-start"> 
-                    <div className="fw-normal text-dark mb-1">Choisir Image</div>
-                    <div className="text-gray small">JPG, GIF, PDF ou PNG</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-                </Form.Group>
-              </Col>
-            </Row>
-            <div className="mt-3">
-              <Button variant="primary" type="submit">Enregistrer</Button>
-            </div>
           </Form>
         </Card.Body>
       </Card>

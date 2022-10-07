@@ -6,6 +6,7 @@ export const Routes = {
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
     Profile: { path: "/profile" },
+    EditeProfile: { path: "/edite-profile" },
 
     Upgrade: { path: "/upgrade" },
     BootstrapTables: { path: "/tables/bootstrap-tables" },

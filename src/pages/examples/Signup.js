@@ -85,10 +85,13 @@ useEffect(() => {
     .then((response) => {;
     console.log(response?.data)
     console.log({'username':username,'password':password});
-    sessionStorage.setItem("rol", JSON.stringify('rol',rol)) 
+    sessionStorage.setItem("rol", JSON.stringify('rol',rol))
+    const token=response.data['token'];
+    localStorage.setItem('token',token)
+    const id=response.data.user_info['id'];
+    localStorage.setItem('id',id)
     setRol();
     setSuccess(true);
-  
       // storing input rol
     })
     } catch(err){
