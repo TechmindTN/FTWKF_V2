@@ -24,6 +24,7 @@ export const Profile = () =>  {
   const [role, setRole] = useState();
   const [categorie, setCategorie] = useState();
   const [licences, setLicences] = useState();
+
   useEffect(() => {
  
     fetch(`https://cf13-102-158-87-105.eu.ngrok.io/api/pro/${window.localStorage.getItem("id")}/`,{
@@ -34,6 +35,9 @@ export const Profile = () =>  {
       
    const data = await response.json();
    console.log(data)
+   const id=data.id
+   console.log(id)
+   localStorage.setItem('idP',id)
    setCountry(data.country)
    setFname(data.first_name)
    setLname(data.last_name)

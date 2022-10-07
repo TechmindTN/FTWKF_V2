@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBoxOpen, faCartArrowDown, faChartPie, faChevronDown, faClipboard, faCommentDots, faFileAlt, faPlus, faRocket, faStore, faPen } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Button, Dropdown } from '@themesberg/react-bootstrap';
@@ -7,19 +7,24 @@ import { EditeProfile } from "../components/Forms";
 import { Input } from "@material-ui/core";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
 import axios from "axios";
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     console.log("Data for update : ");
-    const response = await axios.put(`https://cf13-102-158-87-105.eu.ngrok.io/api/profile/${window.localStorage.getItem("id")}/`, );
+    const token = localStorage.getItem("token");
+    const id=localStorage.getItem("idP");
+    console.log(id);
+    const response = await axios.put(`https://cf13-102-158-87-105.eu.ngrok.io/api/profile/${window.localStorage.getItem("idP")}/`,({'first_name'
+    :'jhon1'}), {
+       headers: {'Authorization':`TOKEN ${token}`,'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
+       withCredentials: false
+    });
   } catch (error) {
     console.log(error);
   }
 };
-const handleInput = (e) => {
-  console.log(e.target.name, " : ", e.target.value);
-  setUser({ ...user, [e.target.name]: e.target.value });
-};
+
 export default class CreateEmployee extends React.Component {
   render() {
   return (
@@ -87,7 +92,7 @@ export default class CreateEmployee extends React.Component {
           type="text"
           value=""
           placeholder={"Your names"}
-          handleInput={handleInput}
+       
         />
         <br />
         <Input
@@ -95,7 +100,7 @@ export default class CreateEmployee extends React.Component {
           type="email"
           value=""
           placeholder={"Your email"}
-          handleInput={handleInput}
+   
         />
         <br />
         <input type="submit" value="Update" />
