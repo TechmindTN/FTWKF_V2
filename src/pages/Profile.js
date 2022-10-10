@@ -24,10 +24,11 @@ export const Profile = () =>  {
   const [role, setRole] = useState();
   const [categorie, setCategorie] = useState();
   const [licences, setLicences] = useState();
+  const [mail, setMail] = useState();
 
   useEffect(() => {
  
-    fetch(`https://cf13-102-158-87-105.eu.ngrok.io/api/pro/${window.localStorage.getItem("id")}/`,{
+    fetch(`https://67ec-197-14-10-36.eu.ngrok.io/api/pro/${window.localStorage.getItem("id")}/`,{
       headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':'TOKEN 7d724f4762ff08ebbf6aa9a8534ef4c737c1f9462b9acf43b2b108ade86c90d5',  'Access-Control-Allow-Methods': 'Accept'},
       withCredentials: false
    })
@@ -62,17 +63,18 @@ export const Profile = () =>  {
             <Col md={10} className="mb-3">
           <h5 className="mb-4">Informations Generales </h5></Col>
           <Col md={2} className="mb-3">
-          <Dropdown.Toggle  variant="primary" as={Link} to={Routes.EditeProfile.path}>
-              <FontAwesomeIcon icon={faClipboard} className="me-2" /> Edite Profile
-              <span className="icon icon-small ms-1"><FontAwesomeIcon icon={faChevronDown} /></span>
-            </Dropdown.Toggle></Col>
+          <Button
+            variant="primary" as={Link} to={Routes.EditeProfile.path} className="mb-4">
+              <FontAwesomeIcon icon={faPen}  /> Edite Profile
+             
+            </Button></Col>
             </Row>
           <Form >
             <Row>
             <Col md={4} className="mb-3">
                 <Form.Group id="emal">
                   <Form.Label>Role</Form.Label>
-                  <Form.Control required type="email" id="email"  value={role} onChange={(e) =>setRole(e.target.value)}
+                  <Form.Control required type="email" id="email"  value={role ? role : "--"} onChange={(e) =>setRole(e.target.value)}
                                   autoComplete="off" 
                                  
                   name="email" placeholder="name@company.com" />
@@ -82,7 +84,7 @@ export const Profile = () =>  {
                 <Form.Group id="firstName">
                   <Form.Label>Nom</Form.Label>
                   <Form.Control required type="text" id="first_name" name="first_name" 
-                  autoComplete="off" value={first_name}
+                  autoComplete="off" value={first_name ? first_name : "--"}
                                     />
                 </Form.Group>
               </Col>
@@ -90,7 +92,7 @@ export const Profile = () =>  {
                 <Form.Group id="lastName">
                   <Form.Label>Prenom</Form.Label>
                   <Form.Control required type="text" id="lname" name="lname" placeholder="votre prenom"
-                                  autoComplete="off" value={last_name}
+                                  autoComplete="off" value={last_name ? last_name : "--"}
                                  
                   />
                 </Form.Group>
@@ -110,7 +112,7 @@ export const Profile = () =>  {
                           required
                           type="text" id="birthday"  name="birthday"
                         
-                          placeholder="mm/dd/yyyy" value={birthday}
+                          placeholder="mm/dd/yyyy" value={birthday? birthday : "--/--/----"}
                           onFocus={openCalendar}
                           autoComplete="off" 
                           />
@@ -122,9 +124,7 @@ export const Profile = () =>  {
                 <Form.Group id="gender">
                   <Form.Label>Gendre</Form.Label>
                   <Form.Select id="gender"  name="gender" 
-                                  autoComplete="off" 
-                               
-                  >
+                                  autoComplete="off" >
                     <option value="0">Gender</option>
                     <option value="1">Femme</option>
                     <option value="2">Homme</option>
@@ -136,7 +136,7 @@ export const Profile = () =>  {
               <Col md={6} className="mb-3">
                 <Form.Group id="emal">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control required type="email" id="email"  value={role}
+                  <Form.Control required type="email" id="email"  value={mail ? mail : "--"}
                                   autoComplete="off" 
                                  
                   name="email" placeholder="name@company.com" />
@@ -145,7 +145,7 @@ export const Profile = () =>  {
               <Col md={6} className="mb-3">
                 <Form.Group id="phone">
                   <Form.Label>Téléphone</Form.Label>
-                  <Form.Control required type="number" value={phone}
+                  <Form.Control required type="number" value={phone ? phone : "--"}
                                                   autoComplete="off" 
                                      
                   id="phone"  name="phone" placeholder="+12-345 678 910" />
@@ -161,7 +161,7 @@ export const Profile = () =>  {
                   <Form.Control required type="text" id="address"  name="address" 
                                                   autoComplete="off" 
                                                 
-                  placeholder="Enter your home address" />
+                   />
                 </Form.Group>
               </Col>
               <Col sm={3} className="mb-3">
@@ -176,7 +176,7 @@ export const Profile = () =>  {
                 <Form.Group id="country">
                   <Form.Label>country</Form.Label>
                   <Form.Control  type="text" placeholder="country"  id="country"  name="country"
-                  value={country}
+                  value={country? country : "--"}
                                               
                   />
                 </Form.Group>

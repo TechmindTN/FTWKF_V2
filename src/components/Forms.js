@@ -87,7 +87,6 @@ export const GeneralInfoForm = () => {
   );
    console.log({'city':city,'country':country,'phone':phone,'id':id})
     setSuccess(true);
-    return <p>Success</p>
 
    
   }
@@ -415,9 +414,12 @@ export const EditeProfile = () => {
 
   const [country, setCountry] = useState('');
   const [valideCountry , setValidcountry] = useState('');
-
-  const[errMsg, setErrMsg] = useState ('') ;
-  const[success, setSuccess] = useState ('') ;
+  const [zip_code, setZipCode] = useState('');
+  const [valideZip , setValidzip] = useState('');
+  const [cin, setCin] = useState('');
+  const [valideCin , setValidcin] = useState('');
+  const [errMsg, setErrMsg] = useState ('') ;
+  const [success, setSuccess] = useState ('') ;
   const userRef = useRef();
   const errRef = useRef();
 
@@ -425,37 +427,45 @@ export const EditeProfile = () => {
   
   useEffect(() => {
     setId(window.localStorage.getItem("id"));
+  
   }, []);
   useEffect(() => {
     setErrMsg('');
   },[city,country,phone])
-  const handlesubmit = async (e) => {
-
-
-   
-
-  // const userNames = ['Jesse', 'Tom', 'Anna']
-  // const renderListOfUserNames = (names) => {
-  //   return names.map(name => <li>{name}</li>)
-  // }
-
-
-    
-    const article = { last_name: 'Jhon01' };
-    axios.put('https://cf13-102-158-87-105.eu.ngrok.io/api/pro/1/', article)
-        .then(response => this.setState({ updatedAt: response.data.updatedAt }));
-};
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("Data for update : ");
+      const token = localStorage.getItem("token");
+      const id=localStorage.getItem("idP");
+      console.log(id);
+      const response = await axios.put(`profile/${window.localStorage.getItem("idP")}/`,({'first_name'
+      :fname,'last_name':lname,'birthday':birthday,'phone':phone,'zip_code':zip_code,'address':address}), {
+         headers: {'Authorization':`TOKEN ${token}`,'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
+         withCredentials: false
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
         <h5 className="mb-4">Informations Generales </h5>
      
-        <Form onSubmit={handlesubmit}>
+        <Form  onSubmit={handleSubmit}>
           <Row>
-          
-            <Col md={6} className="mb-3">
+          <Col md={4} className="mb-3">
+              <Form.Group id="firstName">
+                <Form.Label>CIN</Form.Label>
+                <Form.Control required type="text" id="cin" name="cin" placeholder="CIN" 
+                 onChange={(e) =>setCin(e.target.value)} value={cin}
+               
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4} className="mb-3">
               <Form.Group id="firstName">
                 <Form.Label>Nom</Form.Label>
                 <Form.Control required type="text" id="fname" name="fname" placeholder="votre Nom" 
@@ -464,7 +474,7 @@ export const EditeProfile = () => {
                 />
               </Form.Group>
             </Col>
-            <Col md={6} className="mb-3">
+            <Col md={4} className="mb-3">
               <Form.Group id="lastName">
                 <Form.Label>Prenom</Form.Label>
                 <Form.Control required type="text" id="lname" name="lname" placeholder="votre prenom"
@@ -486,9 +496,9 @@ export const EditeProfile = () => {
                       <InputGroup.Text><FontAwesomeIcon icon={faCalendarAlt} /></InputGroup.Text>
                       <Form.Control
                         required
-                        type="text" id="birthday"  name="birthday"
-                        value={birthday ? moment(birthday).format("MM/DD/YYYY") : ""}
-                        placeholder="mm/dd/yyyy"
+                        type="date" id="birthday"  name="birthday"
+                        value={birthday}
+                        placeholder="YYYY-MM-DD"
                         onFocus={openCalendar}
                         autoComplete="off" onChange={(e) =>setBirthday(e.target.value)}
                         />
@@ -627,7 +637,7 @@ export const EditeProfile = () => {
             <Col sm={4}>
               <Form.Group id="zip">
                 <Form.Label>Code Postal</Form.Label>
-                <Form.Control required type="tel" placeholder="ZIP" />
+                <Form.Control required type="text" placeholder="ZIP code"  value={zip_code} onChange={(e) =>setZipCode(e.target.value)}/>
               </Form.Group>
             </Col>
           </Row>

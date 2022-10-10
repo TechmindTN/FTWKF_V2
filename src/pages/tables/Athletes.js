@@ -15,7 +15,7 @@ const[datas,setData]=useState('');
   
   const[id,setId]=useState([])
   useEffect(() => {
-    fetch(`https://cf13-102-158-87-105.eu.ngrok.io/api/athlete/`,{
+    fetch(`https://ab76-102-156-25-194.eu.ngrok.io/api/athlete/`,{
       headers: {'Content-Type': 'application/x-www-form-urlencoded','Authentication':'BEARER 7d724f4762ff08ebbf6aa9a8534ef4c737c1f9462b9acf43b2b108ade86c90d5',  'Access-Control-Allow-Methods': 'Accept'},
       withCredentials: false
    })

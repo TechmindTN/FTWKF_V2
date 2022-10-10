@@ -5,13 +5,13 @@ import { faAngleDown, faAngleUp, faChartArea, faChartBar, faChartLine, faFlagUsa
 import { faAngular, faBootstrap, faReact, faVuejs } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Card, Image, Button, ListGroup, ProgressBar } from '@themesberg/react-bootstrap';
 import { CircleChart, BarChart, SalesValueChart, SalesValueChartphone } from "./Charts";
-
+import axios from "../pages/examples/api/axios";
 import Profile1 from "../assets/img/team/profile-picture-1.jpg";
 import ProfileCover from "../assets/img/profile-cover.jpg";
 
 import teamMembers from "../data/teamMembers";
 
-
+const PROFILE_URL ='profile/';
 export const ProfileCardWidget = () => {
   const [username, setUsername] = useState('');
 
@@ -44,10 +44,94 @@ export const ProfileCardWidget = () => {
 
 export const ChoosePhotoWidget = (props) => {
   const { title, photo } = props;
+  // 
+  
 
+  // const [file, setFile] = useState()
+
+  // function handleChange(event) {
+  //   setFile(event.target.files[0])
+  // }
+  // function handleSubmit(event) {
+  //   event.preventDefault()
+  //   const token = localStorage.getItem("token");
+
+  //   const url = 'https://67ec-197-14-10-36.eu.ngrok.io/api/profile/';
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   formData.append('fileName', file.name);
+  //   const config = {
+  //     headers: {
+  //       'content-type': 'multipart/form-data',
+  //       'Authorization':  `TOKEN ${token}`,
+  //       'Access-Control-Allow-Origin':'Accept'
+  //     },
+  //   };
+  //   axios.post(url, {'profile_photo':formData}, config).then((response) => {
+  //     console.log(response.data);
+  //   });
+
+  // }
+  
+  const [selectedFile, setSelectedFile] = React.useState(null);
+
+  const handleSubmit = async(event) => {
+    event.preventDefault()
+    const token = localStorage.getItem("token");
+
+    const formData = new FormData();
+    console.log(selectedFile)
+    formData.append("profile_photo", selectedFile);
+  
+    // console.log(formData.keys())
+    // for(var k in formData.keys()){
+    //   console.log(k)
+    // }
+    // for(var v in formData.values()){
+    //   console.log(v)
+    // }
+    // console.log(formData.keys+formData.values)
+    try {
+      const token = localStorage.getItem("token");
+
+      axios.post(
+        "https://67ec-197-14-10-36.eu.ngrok.io/api/profile/",
+        formData,
+         { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+          'Access-Control-Allow-Origin':'Accept'} },
+      )
+      // const response = await axios({
+      //   method: "post",
+      //   url: "https://67ec-197-14-10-36.eu.ngrok.io/api/profile/",
+      //    formData,
+      //   headers: { "Content-Type": "multipart/form-data",'Authorization':  `TOKEN ${token}`,
+      //   'Access-Control-Allow-Origin':'Accept' },
+      // });
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0])
+
+  }
+
+  
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
+      {/* <form onSubmit={handleSubmit}>
+          <h1>React File Upload</h1>
+          <input type="file" onChange={handleChange}/>
+          <button type="submit">Upload</button>
+        </form> */}
+   <form onSubmit={handleSubmit}>
+      <input type="file" onChange={handleFileSelect}/>
+      <input type="submit" value="Upload File" />
+    </form>
+
+
         <h5 className="mb-4">{title}</h5>
         <div className="d-xl-flex align-items-center">
           <div className="user-avatar xl-avatar">
@@ -56,6 +140,7 @@ export const ChoosePhotoWidget = (props) => {
           <div className="file-field">
             <div className="d-flex justify-content-xl-center ms-xl-3">
               <div className="d-flex">
+     
                 <span className="icon icon-md">
                   <FontAwesomeIcon icon={faPaperclip} className="me-3" />
                 </span>
@@ -67,6 +152,12 @@ export const ChoosePhotoWidget = (props) => {
               </div>
             </div>
           </div>
+          
+          {/* <div>
+      IMAGE UPLOAD
+      <input type="file" onChange={handleChange} /> <br />
+      <button onClick={handleApi} >SUBMIT</button>
+    </div> */}
         </div>
       </Card.Body>
     </Card>

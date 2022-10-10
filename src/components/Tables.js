@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faEdit, faEllipsisH, faExternalLinkAlt, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
+import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
@@ -75,9 +75,12 @@ export const PageVisitsTable = () => {
   );
 };
 
+
+
+
 export const PageTrafficTable = () => {
   const [showDefault, setShowDefault] = useState(false);
-const handleClose = () => setShowDefault(false);
+  const handleClose = () => setShowDefault(false);
   const TableRow = (props) => {
     const { id, source, sourceIcon, sourceIconColor, sourceType, category, rank, trafficShare, change } = props;
 
@@ -85,35 +88,33 @@ const handleClose = () => setShowDefault(false);
       
       <tr >
         <td className="border-0 ">
-          <Card.Link href="#" className="text-primary ">{id}</Card.Link>
+          <Card.Link href="#" className="text-primary ">{id ? id : "--"}</Card.Link>
         </td>
         <td className="border-0 ">
-          <FontAwesomeIcon icon={sourceIcon} className={`icon icon-xs text-${sourceIconColor} w-30`} />
-          {source}
+          {source ? source : "--"}
         </td>
-        <td className="border-0 ">{sourceType}</td>
+        <td className="border-0 ">{sourceType ? sourceType : "--"}</td>
         <td className="border-0 ">{category ? category : "--"}</td>
         <td className="border-0 ">{rank ? rank : "--"}</td>
-        <td className="border-0 ">
-          <Row className="d-flex align-items-center">
+        <td className="border-0 ">{trafficShare ? trafficShare : "--"}
+          {/* <Row className="d-flex align-items-center">
             <Col xs={12} xl={2} className="px-0">
-              <small className="border-0">{trafficShare}%</small>
+              <small className="border-0">{trafficShare}</small>
             </Col>
             <Col xs={12} xl={10} className="px-0 px-xl-1">
               <ProgressBar variant="primary" className="progress-lg mb-0" now={trafficShare} min={0} max={100} />
             </Col>
-          </Row>
+          </Row> */}
         </td>
         <td className="border-0 ">
-          <ValueChange value={change} suffix="%" />
+       {change} 
         </td>
         <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details</Button></td>
-      </tr>
-      
-    );
-    <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
+        <React.Fragment>
+
+  <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
     <Modal.Header>
-      <Modal.Title className="h6">Terms of Service</Modal.Title>
+      <Modal.Title className="h6">Edite athletes</Modal.Title>
       <Button variant="close" aria-label="Close" onClick={handleClose} />
     </Modal.Header>
     <Modal.Body>
@@ -129,6 +130,11 @@ const handleClose = () => setShowDefault(false);
     </Button>
     </Modal.Footer>
   </Modal>
+</React.Fragment>
+      </tr>
+      
+    );
+
   };
 
   return (

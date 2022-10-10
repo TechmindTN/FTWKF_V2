@@ -8,22 +8,22 @@ import { Input } from "@material-ui/core";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
 import axios from "axios";
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    console.log("Data for update : ");
-    const token = localStorage.getItem("token");
-    const id=localStorage.getItem("idP");
-    console.log(id);
-    const response = await axios.put(`https://cf13-102-158-87-105.eu.ngrok.io/api/profile/${window.localStorage.getItem("idP")}/`,({'first_name'
-    :'jhon1'}), {
-       headers: {'Authorization':`TOKEN ${token}`,'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
-       withCredentials: false
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   try {
+//     console.log("Data for update : ");
+//     const token = localStorage.getItem("token");
+//     const id=localStorage.getItem("idP");
+//     console.log(id);
+//     const response = await axios.put(`https://ab76-102-156-25-194.eu.ngrok.io/api/profile/${window.localStorage.getItem("idP")}/`,({'first_name'
+//     :'jhon'}), {
+//        headers: {'Authorization':`TOKEN ${token}`,'Content-Type':'application/json','Access-Control-Allow-Origin':'Accept'},
+//        withCredentials: false
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export default class CreateEmployee extends React.Component {
   render() {
@@ -84,9 +84,9 @@ export default class CreateEmployee extends React.Component {
           </Dropdown>
         </div>
       </div>
-      <div className="App">
+      {/* <div className="App">
       <h1></h1>
-      <form onSubmit={handleSubmit}>
+      <form>
         <Input
           name="name"
           type="text"
@@ -105,7 +105,7 @@ export default class CreateEmployee extends React.Component {
         <br />
         <input type="submit" value="Update" />
       </form>
-    </div>
+    </div> */}
       <Row>
         <Col xs={12} xl={8}>
           <EditeProfile />

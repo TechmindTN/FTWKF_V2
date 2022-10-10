@@ -57,8 +57,8 @@ const handleSubmit = async (e) =>{
   localStorage.setItem('id',id)
   localStorage.setItem('username',username)
   setIsLoggedin(true);
-    setSuccess(true);
-    console.log(success) });
+
+    console.log(isLoggedin) });
   }catch(err) {
 if(err?.response){
  setErrMsg('no Server response')
@@ -73,29 +73,29 @@ if(err?.response){
 errRef.current.focus(); 
   }
 }
-useEffect(() => {
-    fetch(`https://6e73-197-14-10-36.eu.ngrok.io/api/athlete/?format=json`,{
-      headers: {'Authentication':'BEARER ',  'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Methods': 'Accept'},
-      withCredentials: false
-   })
-      .then((response) => {
+// useEffect(() => {
+//     fetch(`https://6e73-197-14-10-36.eu.ngrok.io/api/athlete/?format=json`,{
+//       headers: {'Authentication':'BEARER ',  'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Methods': 'Accept'},
+//       withCredentials: false
+//    })
+//       .then((response) => {
         
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`
-          );
-        }
-        return data=response.json();
-      })
-      .then((actualData) => console.log(actualData))
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
+//         if (!response.ok) {
+//           throw new Error(
+//             `This is an HTTP error: The status is ${response.status}`
+//           );
+//         }
+//         return data=response.json();
+//       })
+//       .then((actualData) => console.log(actualData))
+//       .catch((err) => {
+//         console.log(err.message);
+//       });
+//   }, []);
  
   return (
     <> 
-    {success ? (
+    {isLoggedin ? (
         <section className="d-flex align-items-center my-58 mt-lg-4 mb-lg-5">
         <Container>
          
